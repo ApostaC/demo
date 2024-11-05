@@ -39,3 +39,39 @@ Please replace <your HF token> with your huggingface token in the bash script ab
 
 
 ## Send your requests to different serving engines
+
+
+
+## Steps to follow:
+
+### Send the first request to vLLM w/ LMCache (A)
+
+1. Open `http://<Your server's IP>:8501` (corresponds to the serving engine `vLLM w/ LMCache (A)`)
+2. Type query: “What’s FFMPEG (answer in 10 words)”
+
+You should be able to see the following results with a response delay of around 6 seconds.
+
+<img width="333" alt="image" src="https://github.com/user-attachments/assets/e8b388ce-a9d1-44f6-9de2-6a344a52ccfa">
+
+
+
+### What if the original vLLM gets a new request with the **same** context
+
+1. Open `http://<Your server's IP>:8502` (corresponds to the serving engine `original vLLM`)
+2. Type query: Summarize FFMPEG's main feature in 10 words
+
+You should be able to see the following results with a response delay still of around 6 seconds.
+
+<img width="333" alt="image" src="https://github.com/user-attachments/assets/aff3860f-379f-4130-9df6-7b475e55b90f">
+
+
+### What if the vLLM w/ LMCache (B) gets a new request with the **same** context
+
+1. Open `http://<Your server's IP>:8503` (corresponds to the serving engine `vLLM w/ LMCache (B)`)
+2. Type query: Summarize FFMPEG's main feature in 10 words
+  -  You should be able to see the following results with a response delay still of less than 1 second, which is 6x faster than the original vLLM.
+3. Type another query: just give me a ffmpeg command line example without any explanation
+  - You should be able to see the following results with a response delay still of around 0.35 seconds, which is 15x faster than the original vLLM.
+
+<img width="759" alt="image" src="https://github.com/user-attachments/assets/adc508c5-3487-422b-86bf-5e564356ea7a">
+
